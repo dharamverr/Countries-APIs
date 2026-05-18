@@ -5,7 +5,7 @@ import CountryCardSimmer from './CountryCardSimmer';
 export default function CountriesContainer({query}) {
     const [countriesData, setCountriesData] = useState([]);
     
-    const url = 'https://restcountries.com/v3.1/all?fields=name,capital,currencies,population,region,flag,borders,launguages,flags'
+    const url = 'https://restcountries.com/v3.1/all?fields=name,capital,currencies,population,region,borders,languages,flags,subregion,tld'
     useEffect(() => {
         fetch(url)
         .then(Response => Response.json())
@@ -20,13 +20,13 @@ export default function CountriesContainer({query}) {
             //console.log(countryData.flags.svg)
 
             return (<CountryCard 
-                    key={countryData.flag} 
+                    key={countryData.name.common} 
                     countryName = {countryData.name.common}
                     population = {countryData.population.toLocaleString('en-IN')}
                     region = {countryData.region}
                     capital = {countryData.capital.join(", ")}
-                    currency = {countryData.currencies}
                     flags = {countryData.flags.svg}
+                    data = {countryData}
                     />
         )})}
     </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams, useSearchParams } from "react-router";
+import { Link, useLocation, useParams, useSearchParams } from "react-router";
 import CountyDetailShimmer from "./CountyDetailShimmer";
 
 export default function CountryDetail() {
@@ -9,26 +9,37 @@ export default function CountryDetail() {
   const prams = useParams()
   //console.log(prams.country)
   const countryName = prams.country
+  //pass data from countriesContainer to countryDetails
+  const {state} = useLocation()
+  //console.log(state)
   const url = `https://restcountries.com/v3.1/name/${countryName}`;
   
-  useEffect(() => {
-    fetch(url)
-      .then((Response) => Response.json())
-      .then(([data]) =>
-        setCountryDetail({
-          flag: data?.flags?.svg,
-          countryName: data?.name?.common,
-          nativename: Object.values(data.name.nativeName|| {})[0]?.common || "N/A",
+
+  function updateCountryData(data) {
+     setCountryDetail({
+          flags: data?.flags?.svg,
           population: data.population.toLocaleString("en-IN") || "N/A",
+          countryName: data?.name?.common,
           region: data.region,
-          subregion: data.subregion,
           capital: data.capital,
-          tld: data.tld,
           currencies: Object.values(data.currencies || {}),
+          nativename: Object.values(data.name.nativeName|| {})[0]?.common || "N/A",
+          subregion: data.subregion,
+          tld: data.tld,
           language: Object.values(data.languages || {}),
           borders: data.borders || [],
-        }),
-      ).catch((error) => {setNotFound(true)});
+        })
+  }
+  useEffect(() => {
+    if(state) {
+      updateCountryData(state)
+      return
+    }
+
+    fetch(url)
+      .then((Response) => Response.json())
+      .then(([data]) => updateCountryData(data))
+      .catch((error) => {setNotFound(true)});
   }, [countryName]);
 
   useEffect(() => {
@@ -42,7 +53,7 @@ export default function CountryDetail() {
     )
   ).then((countries) => {
     setBorderCountries(countries);
-  }).catch((error) => {setNotFound(true)});
+  })
 }, [countryDetail.borders]);
 
   //console.log(borderCountries);
@@ -58,13 +69,12 @@ export default function CountryDetail() {
           <i className="fa-solid fa-arrow-left"></i>&nbsp; Back
         </span>
         <div className="country-detail">
-          <img src={countryDetail.flag} alt="" />
+          <img src={countryDetail.flags} alt="" />
           <div className="detail-text-container">
             <h1>{countryDetail.countryName}</h1>
             <div className="detail-text">
               <p>
                 <b>Native Name: </b>
-
                 <span className="native-name">{countryDetail.nativename}</span>
               </p>
               <p>
