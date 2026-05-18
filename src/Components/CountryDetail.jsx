@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router";
+import CountyDetailShimmer from "./CountyDetailShimmer";
 
 export default function CountryDetail() {
   const [countryDetail, setCountryDetail] = useState({});
@@ -47,8 +48,10 @@ export default function CountryDetail() {
   //console.log(borderCountries);
   if(notFound) return <div style={{textAlign:'center', fontSize:'2rem', marginTop:'7rem'}}>Country Not Found.</div>
   return Object.keys(countryDetail).length === 0 ? (
-    <h1>Loading...</h1>
+    <CountyDetailShimmer/>
   ) : (
+    <>
+    {/* <CountyDetailShimmer/> */}
     <main>
       <div className="country-detail-container">
         <span className="back-button" onClick={() => history.back()}>
@@ -122,5 +125,6 @@ export default function CountryDetail() {
         </div>
       </div>
     </main>
+    </>
   );
 }

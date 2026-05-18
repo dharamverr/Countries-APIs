@@ -250,6 +250,14 @@ main {
     padding: 5px;
     font-size: 1.6rem;
   }
+  .country-detail > img {
+  width: 100%;
+  max-width: 300px;
+  object-fit: fill;
+}
+.detail-text {
+  grid-template-columns: 1fr;
+}
   .detail-text {
   grid-template-columns: 1fr;
 }
