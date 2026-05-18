@@ -3,10 +3,8 @@ import { Link, useParams, useSearchParams } from "react-router";
 
 export default function CountryDetail() {
   const [countryDetail, setCountryDetail] = useState({});
-  const [borderCountries, setBorderCountries] = useState([])
-  // const [URLsearchparams] = useSearchParams();
-  // console.log(URLsearchparams)
-  // const countryName = URLsearchparams.get("name");
+  const [borderCountries, setBorderCountries] = useState([]);
+  const [notFound,setNotFound] = useState(false);
   const prams = useParams()
   //console.log(prams.country)
   const countryName = prams.country
@@ -29,7 +27,7 @@ export default function CountryDetail() {
           language: Object.values(data.languages || {}),
           borders: data.borders || [],
         }),
-      );
+      ).catch((error) => {setNotFound(true)});
   }, [countryName]);
 
   useEffect(() => {
@@ -43,11 +41,12 @@ export default function CountryDetail() {
     )
   ).then((countries) => {
     setBorderCountries(countries);
-  });
+  }).catch((error) => {setNotFound(true)});
 }, [countryDetail.borders]);
 
   //console.log(borderCountries);
-  return countryDetail === {} ? (
+  if(notFound) return <div style={{textAlign:'center', fontSize:'2rem', marginTop:'7rem'}}>Country Not Found.</div>
+  return Object.keys(countryDetail).length === 0 ? (
     <h1>Loading...</h1>
   ) : (
     <main>
