@@ -240,7 +240,6 @@ main {
   row-gap: 5rem;
   font-size: 1.6rem;
   align-items: flex-start;
-  margin-inline: 4rem;
 }
 
 .back-button {
@@ -342,6 +341,9 @@ main {
 /* Mobile */
 @media (max-width: 480px) {
   /* header style */
+  main {
+    margin: 0;
+  }
   .header-container {
     padding-inline: 10px;
   }

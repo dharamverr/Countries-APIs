@@ -21,8 +21,8 @@ export default function Header() {
             localStorage.setItem("isDark",!isDark)
           }}
         >
-          <i className={`fa-solid fa-${isDark ? "moon" : "sun"}`}></i>
-          &nbsp;&nbsp;{isDark ? "Dark Mode" : "Light Mode"}
+          <i className={`fa-solid fa-${isDark ? "sun" : "moon"}`}></i>
+          &nbsp;&nbsp;{isDark ? "Light Mode" : "Dark Mode"}
         </p>
       </div>
     </header>
