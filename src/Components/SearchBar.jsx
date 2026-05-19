@@ -8,7 +8,6 @@ export default function ({ query, setQuery }) {
       <input
         type="text"
         placeholder="Search for a country..."
-        value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
     </div>
