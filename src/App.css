@@ -342,7 +342,7 @@ main {
 @media (max-width: 480px) {
   /* header style */
   main {
-    margin: 0;
+    margin: 20px;
   }
   .header-container {
     padding-inline: 10px;
